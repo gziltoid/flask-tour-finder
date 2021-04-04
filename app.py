@@ -6,21 +6,32 @@ app = Flask(__name__)
 
 @app.route("/")
 def index_view():
-    index_page_info = dict(title=title, subtitle=subtitle, description=description)
-    return render_template("index.html", index_page_info=index_page_info, tours=tours)
+    return render_template(
+        "index.html",
+        title=title,
+        subtitle=subtitle,
+        description=description,
+        tours=tours,
+        navbar=departures,
+    )
 
 
 @app.route("/departures/<departure_id>/")
 def departure_view(departure_id):
-    departure = departures.get(departure_id)
-    if departure is None:
+    departure_name = departures.get(departure_id)
+    if departure_name is None:
         abort(404, "The departure is not found.")
     departure_tours = {
         key: value
         for (key, value) in tours.items()
         if tours[key]["departure"] == departure_id
     }
-    return render_template("departure.html", departure=departure, tours=departure_tours)
+    return render_template(
+        "departure.html",
+        departure={"name": departure_name, "tours": departure_tours},
+        navbar=departures,
+        title=title,
+    )
 
 
 @app.route("/tours/<int:tour_id>/")
@@ -34,12 +45,14 @@ def tour_view(tour_id):
             **tour,
             "departure_name": departures[tour["departure"]],
         },
+        title=title,
+        navbar=departures,
     )
 
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return f"We're sorry, we couldn't find the page you requested: {error}", 404
+    return render_template("404.html", title=title, navbar=departures), 404
 
 
 @app.errorhandler(500)

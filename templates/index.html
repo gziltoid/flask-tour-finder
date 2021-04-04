@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{{ index_page_info.title }}</title>
+    <title>Stepik Travel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -40,7 +40,7 @@
 <main class="container mt-3">
     <!-- HERO -->
     <section class="jumbotron text-center mt-4"
-             style="background: url('https://images.pexels.com/photos/3266537/pexels-photo-3266537.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=750&w=1260'); background-position: center center">
+             style="background: url('https://images.pexels.com/photos/3266537/pexels-photo-3266537.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=750&w=1260') center center;">
         <h1 class="display-4">Всякие туры</h1>
         <p class="lead">{{ index_page_info.subtitle }}</p>
         <p class="mt-5 w-50 mx-auto">{{ index_page_info.description }}</p>
@@ -56,7 +56,7 @@
                     <div class="card-body">
                         <h2 class="h5 card-title">{{ tour.title }}</h2>
                         <p class="card-text">{{ tour.description|truncate(110, True) }}</p>
-                        <a href="/tours/{{ tour_id }}" class="btn btn-sm btn-primary">Подробнее</a>
+                        <a href="{{ url_for('tour_view', tour_id=tour_id) }}" class="btn btn-sm btn-primary">Подробнее</a>
                     </div>
                 </div>
             </div>

@@ -10,15 +10,15 @@ def index_view():
     return render_template("index.html", index_page_info=index_page_info, tours=tours)
 
 
-@app.route("/departures/<departure_name>/")
-def departure_view(departure_name):
-    departure = departures.get(departure_name)
+@app.route("/departures/<departure_id>/")
+def departure_view(departure_id):
+    departure = departures.get(departure_id)
     if departure is None:
         abort(404, "The departure is not found.")
     departure_tours = {
         key: value
         for (key, value) in tours.items()
-        if tours[key]["departure"] == departure_name
+        if tours[key]["departure"] == departure_id
     }
     return render_template("departure.html", departure=departure, tours=departure_tours)
 
@@ -28,8 +28,13 @@ def tour_view(tour_id):
     tour = tours.get(tour_id)
     if tour is None:
         abort(404, "The tour is not found.")
-    tour['departure_name'] = departures[tour['departure']]
-    return render_template("tour.html", tour=tour)
+    return render_template(
+        "tour.html",
+        tour={
+            **tour,
+            "departure_name": departures[tour["departure"]],
+        },
+    )
 
 
 @app.errorhandler(404)

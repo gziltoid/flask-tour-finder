@@ -1,4 +1,0 @@
-<h1>Туры по направлению {{ departure }}:</h1>
-{% for key, tour in tours.items() %}
-    <p>{{ tour.country }}: <a href="/data/tours/{{ key }}/">{{ tour.title }} {{ tour.price }} {{ tour.stars }}*</a></p>
-{% endfor %}

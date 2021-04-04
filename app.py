@@ -1,12 +1,13 @@
 from flask import Flask, render_template, abort
-from data import tours, departures
+from data import tours, departures, title, subtitle, description
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index_view():
-    return render_template("index.html", tours=tours)
+    index_page_info = dict(title=title, subtitle=subtitle, description=description)
+    return render_template("index.html", index_page_info=index_page_info, tours=tours)
 
 
 @app.route("/departures/<departure_name>/")

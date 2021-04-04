@@ -1,17 +1,28 @@
+from random import sample
+
 from flask import Flask, render_template, abort
+
 from data import tours, departures, title, subtitle, description
+
+INDEX_PAGE_TOURS_NUMBER = 6
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index_view():
+    k = (
+        INDEX_PAGE_TOURS_NUMBER
+        if len(tours.items()) >= INDEX_PAGE_TOURS_NUMBER
+        else len(tours.items())
+    )
+    random_tours = sample(tours.items(), k)
     return render_template(
         "index.html",
         title=title,
         subtitle=subtitle,
         description=description,
-        tours=tours,
+        tours=random_tours,
         navbar=departures,
     )
 
